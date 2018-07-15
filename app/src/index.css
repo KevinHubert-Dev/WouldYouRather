@@ -31,6 +31,11 @@ a {
   width: 50%;
 }
 
+.expand {
+  height: 100%;
+  width: 100%;
+}
+
 .container {
   max-width: 1000px;
   margin: 0 auto;
@@ -42,6 +47,7 @@ a {
   align-items: center;
   align-content: center;
   justify-content: center;
+  flex-flow: column;
 }
 
 .card {
@@ -51,8 +57,60 @@ a {
   padding: 10px;
   margin: 10px;
   box-shadow: 2px 2px 3px 1px rgba(0,0,0,.1);
+  padding: 0px;
 }
+
+.card > div {
+  margin: 5px;
+}
+
+.card > :first-child {
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(0,0,0,.3);
+}
+
 
 .center {
   text-align: center;
+}
+
+h1 {
+  font-size: 1.6em;
+  margin: 0px;
+  padding: 0px;
+  font-weight: 500;
+}
+
+h2 {
+  font-size: 1em;
+  font-weight: 100;
+  padding: 0px;
+  margin: 5px;
+}
+
+h1 > .colorful {
+  color: #00c8a1
+}
+
+.logo {
+  height: 125px;
+  width: 125px;
+  margin: 10px;
+  animation: 20s linear rotate infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg)
+  }
+  to {
+    transform: rotate(360deg)
+  }
+}
+
+hr {
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  size: 5;
 }
