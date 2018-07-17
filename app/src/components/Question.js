@@ -3,24 +3,34 @@ import React, { Component } from 'react'
 import Dropdown from 'react-dropdown'
 import 'react-dropdown/style.css'
 
-import ReactLogo from '../img/react.png'
-import Card from './Card'
 
 class Question extends Component {
 
+  state = {
+    selectedOption: undefined
+  }
+
+  onSubmit = (event) => {
+    event.preventDefault()
+    console.log(this.state.selectedOption)
+  }
+
   render() {
+    const { selectedOption } = this.state;
+    const { owner, avatarURL, optionOne, optionTwo } = this.props
+
     return (
       <div className='card'>
         {/* Header */}
-        <h2>Question asked by '{this.props.owner}'</h2>
+        <h2>Question asked by '{owner}'</h2>
         <hr />
         {/* Body */}
         <div className='card-content'>
           {/* Left-Side (Avatar) */}
           <div className='question-avatar-container'>
             <img className='question-avatar'
-              src={this.props.avatarURL}
-              alt={`Avatar of ${this.props.owner}`}
+              src={avatarURL}
+              alt={`Avatar of ${owner}`}
             />
           </div>
           {/* Right-Side (Form) */}
@@ -29,18 +39,30 @@ class Question extends Component {
             {/* Options */}
             <div className='question-option'>
               <label>
-                <input type="radio" name="gender" value="male" />
-                {this.props.optionOne}
+                <input
+                  type="radio"
+                  name="questionAnswer"
+                  value={optionOne}
+                  checked={selectedOption === optionOne}
+                  onClick={() => { this.setState({ selectedOption: optionOne }) }}
+                />
+                {optionOne}
               </label>
             </div>
             <div className='question-option'>
               <label>
-                <input type="radio" name="gender" value="female" />
-                {this.props.optionTwo}
+                <input
+                  type="radio"
+                  name="questionAnswer"
+                  value={optionTwo}
+                  checked={this.state.selectedOption === optionTwo}
+                  onClick={() => { this.setState({ selectedOption: optionTwo }) }}
+                />
+                {optionTwo}
               </label>
             </div>
             {/* Submit-Button */}
-            <button className='submit-btn'>
+            <button disabled={!selectedOption} className='submit-btn' onClick={this.onSubmit}>
               Submit
             </button>
           </div>
