@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import Dropdown from 'react-dropdown'
 import 'react-dropdown/style.css'
 
+import PropTypes from 'prop-types'
+
 
 class Question extends Component {
 
@@ -62,7 +64,7 @@ class Question extends Component {
               </label>
             </div>
             {/* Submit-Button */}
-            <button disabled={!selectedOption} className='submit-btn' onClick={this.onSubmit}>
+            <button disabled={!selectedOption} className='submit-btn m-t-2 m-b-1m' onClick={this.onSubmit}>
               Submit
             </button>
           </div>
@@ -70,7 +72,13 @@ class Question extends Component {
       </div>
     );
   }
+}
 
+Question.propTypes  = {
+  owner: PropTypes.string.isRequired, 
+  avatarURL: PropTypes.string.isRequired, 
+  optionOne: PropTypes.string.isRequired, 
+  optionTwo: PropTypes.string.isRequired,
 }
 
 export default Question

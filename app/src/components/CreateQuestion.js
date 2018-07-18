@@ -73,7 +73,7 @@ class CreateQuestion extends Component {
             {/* Submit-Button */}
             <button
               disabled={!optionOne || !optionTwo}
-              className='submit-btn m-t-2'
+              className='submit-btn m-t-2 m-b-1'
               onClick={this.handleSubmit}
             >
               Submit
