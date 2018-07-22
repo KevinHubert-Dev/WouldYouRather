@@ -1,6 +1,6 @@
 import * as UserActions from '../actions/userActions'
 
-const userReducer = (state = [], action) => {
+const userReducer = (state = null, action) => {
   switch (action.type) {
     case UserActions.USERS_LOADED: 
       return action.users
