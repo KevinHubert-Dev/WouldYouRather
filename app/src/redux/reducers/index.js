@@ -8,7 +8,7 @@ import { combineReducers } from 'redux'
 
 export default combineReducers({
     loadingBar: loadingBarReducer,
-    questionReducer,
-    authReducer,
-    userReducer
+    questions: questionReducer,
+    users: userReducer,
+    auth: authReducer,
 })
