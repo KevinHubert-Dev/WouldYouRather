@@ -7,16 +7,19 @@ const questionReducer = (state = {}, action) => {
     case QuestionsAction.QUESTION_CREATE:
       return { ...state, [action.question.id]: action.question }
     case QuestionsAction.QUESTION_ANSWERED:
-      return {
-        ...state,
-        [action.questionid]: {
-          [action.answer]: [
-            ...state[action.questionid][action.answer].votes,
-            action.authedUser
-          ]
+      const questionWithNewVote = {
+        ...state[action.questionid],
+        [action.answer]: {
+          ...state[action.questionid][action.answer],
+          votes: [...state[action.questionid][action.answer].votes, action.authedUser]
         }
       }
-    default: return state;
+      
+      return {
+        ...state,
+        [action.questionid]: questionWithNewVote
+      }
+    default: return state
   }
 }
 
