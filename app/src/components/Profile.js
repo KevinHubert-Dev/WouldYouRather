@@ -45,6 +45,9 @@ class Profile extends Component {
   }
 }
 
+Profile.propTypes  = {
+  id: PropTypes.string.isRequired
+}
 
 function mapStateToProps({ users }, { id }) {
   return {

@@ -15,11 +15,6 @@ class QuestionPreview extends Component {
     selectedOption: undefined
   }
 
-  onSubmit = (event) => {
-    event.preventDefault()
-    console.log(this.state.selectedOption)
-  }
-
   render() {
     const { selectedOption } = this.state;
     const { optionOne, optionTwo } = this.props.question
@@ -30,7 +25,6 @@ class QuestionPreview extends Component {
     }
 
     return (
-
       <div className='card'>
         {/* Header */}
         <h2>Question by '{name}'</h2>
@@ -46,15 +40,14 @@ class QuestionPreview extends Component {
           </div>
           {/* Right-Side (Form) */}
           <div className='question-content-container'>
-            <h1 className="blue">Would you rather...</h1>
+            <h1 className="blue">Would you Rather</h1>
             {/* Options */}
             <div className='question-option'>
               <p>...{optionOne.text}...</p>
               <p>...{optionTwo.text}...</p>
             </div>
-
             {/* Submit-Button */}
-            <Link to={`question/${this.props.id}`}>
+            <Link to={`questions/${this.props.id}`}>
               <button className='submit-btn m-t-2 m-b-1m'>
                 Open this Question
               </button>
@@ -62,11 +55,12 @@ class QuestionPreview extends Component {
           </div>
         </div>
       </div>
-
-
-
     );
   }
+}
+
+QuestionPreview.propTypes = {
+  id: PropTypes.string.isRequired
 }
 
 function mapStateToProps({ questions, auth, users }, { id }) {
