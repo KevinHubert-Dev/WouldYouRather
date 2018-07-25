@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { NavLink } from 'react-router-dom'
-
-import * as AuthActions from '../redux/actions/authAction'
 
 import { connect } from 'react-redux'
+
+import * as AuthActions from '../redux/actions/authAction'
 
 class Navigation extends Component {
 
@@ -12,6 +11,7 @@ class Navigation extends Component {
   }
 
   render() {
+    /* Only render if user is logged in */
     if (!this.props.auth) {
       return null
     }

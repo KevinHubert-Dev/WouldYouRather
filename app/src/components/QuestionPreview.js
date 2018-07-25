@@ -1,22 +1,12 @@
 import React, { Component } from 'react'
 
-import Dropdown from 'react-dropdown'
-import 'react-dropdown/style.css'
-
 import PropTypes from 'prop-types'
-
 import { connect } from 'react-redux'
-
 import { Link } from 'react-router-dom'
 
 class QuestionPreview extends Component {
 
-  state = {
-    selectedOption: undefined
-  }
-
   render() {
-    const { selectedOption } = this.state;
     const { optionOne, optionTwo } = this.props.question
     const { name, avatarURL } = this.props.author
 

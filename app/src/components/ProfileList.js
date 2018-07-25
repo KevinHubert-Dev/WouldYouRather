@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 
 import { connect } from 'react-redux'
-
 import Profile from './Profile'
 
 class ProfileList extends Component {
 
   render() {
-
     return (
       <ul>
         {
@@ -25,7 +23,13 @@ class ProfileList extends Component {
 
 function mapStateToProps({ users }) {
   return {
-    usersSorted: Object.keys(users).sort((a, b) => Object.keys(users[a].answers).length + users[a].questions.length < Object.keys(users[b].answers).length + users[b].questions.length)
+    usersSorted: Object.keys(users).sort((a, b) => {
+      const answersUserA = Object.keys(users[a].answers).length
+      const questionsUserA = users[a].questions.length
+      const answersUserB = Object.keys(users[b].answers).length
+      const questionsUserB = users[b].questions.length
+      return (answersUserA + questionsUserA) < (answersUserB + questionsUserB)
+    })
   }
 }
 

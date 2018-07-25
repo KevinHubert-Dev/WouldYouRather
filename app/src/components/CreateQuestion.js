@@ -1,14 +1,8 @@
 import React, { Component } from 'react'
 
-import Dropdown from 'react-dropdown'
-import 'react-dropdown/style.css'
-
-import PropTypes from 'prop-types'
-
 import * as QuestionActions from '../redux/actions/questionsAction'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-
-import { Redirect } from 'react-router'
 
 class CreateQuestion extends Component {
 
@@ -22,13 +16,13 @@ class CreateQuestion extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
-    this.props.dispatch(
-      QuestionActions.handleQuestionCreate(
-        this.state.optionOne,
-        this.state.optionTwo,
-        this.props.auth.id
-      )
-    )
+
+    const { optionOne, optionTwo } = this.state
+    const { dispatch, auth } = this.props
+
+    dispatch(QuestionActions.handleQuestionCreate(
+      optionOne, optionTwo, auth.id
+    ))
     this.setState({
       redirectToDashboard: true
     })
@@ -44,7 +38,7 @@ class CreateQuestion extends Component {
 
   render() {
     const { optionOne, optionTwo, redirectToDashboard } = this.state;
-    const { owner, avatarURL } = this.props
+    const { owner, avatarURL, auth } = this.props
 
     if (redirectToDashboard) {
       return <Redirect to='/' />
@@ -60,8 +54,8 @@ class CreateQuestion extends Component {
           {/* Left-Side (Avatar) */}
           <div className='question-avatar-container flex-center'>
             <img className='avatar round'
-              src={this.props.auth.avatarURL}
-              alt={`Avatar of ${this.props.auth.name}`}
+              src={auth.avatarURL}
+              alt={`Avatar of ${auth.name}`}
             />
           </div>
           {/* Right-Side (Form) */}
@@ -95,8 +89,7 @@ class CreateQuestion extends Component {
               <button
                 disabled={!optionOne || !optionTwo}
                 className='submit-btn m-t-2 m-b-1'
-                onClick={this.handleSubmit}
-              >
+                onClick={this.handleSubmit}>
                 Submit
               </button>
             </form>
@@ -106,7 +99,6 @@ class CreateQuestion extends Component {
     );
   }
 }
-
 
 function mapStateToProps({ auth }) {
   return {

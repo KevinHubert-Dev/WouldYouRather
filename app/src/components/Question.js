@@ -1,29 +1,20 @@
 import React, { Component } from 'react'
 
-import Dropdown from 'react-dropdown'
-
 import * as QuestionAction from '../redux/actions/questionsAction'
-
 import { connect } from 'react-redux'
 import { Line } from 'rc-progress'
-
-import 'react-dropdown/style.css'
 
 
 class Question extends Component {
 
   state = {
-    /* selectedOption will be changed inside of the component. */
     selectedOption: this.props.answered
   }
 
-  // componentDidMount() {
-  //   this.setState({ selectedOption: this.props.answered })
-  // }
-
   onSubmit = (event) => {
+    const { auth, question, dispatch } = this.props
     event.preventDefault()
-    this.props.dispatch(QuestionAction.handleQuestionAnswer(this.props.auth.id, this.props.question.id, this.state.selectedOption))
+    dispatch(QuestionAction.handleQuestionAnswer(auth.id, question.id, this.state.selectedOption))
   }
 
   calcPercent = (num, entire) => {
@@ -69,10 +60,11 @@ class Question extends Component {
                   disabled={answered}
                   checked={selectedOption === 'optionOne'}
                   onClick={() => { this.setState({ selectedOption: 'optionOne' }) }}
-                  />
+                />
                 {optionOne.text}
               </label>
               {
+                /* Add statistic if question was answered */
                 this.props.answered &&
                 <div className='flex-horizontal flex-center '>
                   <Line percent={optionOnePercent} strokeWidth="2" strokeColor="#4169ff" />
@@ -89,10 +81,11 @@ class Question extends Component {
                   disabled={answered}
                   checked={this.state.selectedOption === 'optionTwo'}
                   onClick={() => { this.setState({ selectedOption: 'optionTwo' }) }}
-                  />
+                />
                 {optionTwo.text}
               </label>
               {
+                /* Add statistic if question was answered */
                 this.props.answered &&
                 <div className='flex-horizontal flex-center'>
                   <Line percent={optionTwoPercent} strokeWidth="2" strokeColor="#4169ff" />
@@ -100,8 +93,8 @@ class Question extends Component {
                 </div>
               }
             </div>
-            {/* Submit-Button */}
             {
+              /* Submit-Button */
               answered
                 ? <button disabled className='submit-btn m-t-2 m-b-1m' onClick={this.onSubmit}>You cannot vote again...</button>
                 : <button disabled={!selectedOption} className='submit-btn m-t-2 m-b-1m' onClick={this.onSubmit}>Submit</button>
@@ -117,9 +110,9 @@ class Question extends Component {
 function mapStateToProps({ questions, auth, users }, { match }) {
   const { id } = match.params
   return {
+    auth,
     question: questions[id],
     author: users[questions[id].author],
-    auth,
     answered: users[auth.id].answers[id] ? users[auth.id].answers[id] : null,
   }
 }

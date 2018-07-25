@@ -1,10 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Redirect, Route } from 'react-router'
+import { Redirect, Route } from 'react-router-dom'
 
-
+/* Based on: https://tylermcginnis.com/react-router-protected-routes-authentication/ */
 const PrivateRoute = ({ auth, component: Component, ...rest }) => {
   return (
     <Route

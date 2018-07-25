@@ -8,14 +8,11 @@ import { Provider } from 'react-redux'
 import reducer from './redux/reducers/index'
 import middleware from './redux/middleware/index'
 
-console.log(reducer);
-console.log(reducer);
-console.log(reducer);
-
 const store = createStore(reducer, middleware)
 
 ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider >,
-    document.getElementById('root'));
+  <Provider store={store}>
+    <App />
+  </Provider >,
+  document.getElementById('root')
+)

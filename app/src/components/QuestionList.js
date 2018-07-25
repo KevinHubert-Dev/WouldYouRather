@@ -12,23 +12,24 @@ class QuestionList extends Component {
 
   handleToggleFilter = (event) => {
     event.preventDefault()
-
     this.setState(currState => {
       return { showAnswered: !currState.showAnswered }
     })
   }
 
   render() {
-    const { questions, questionKeys, auth } = this.props
+    const { users, questions, questionKeys, auth } = this.props
+    const { showAnswered } = this.state
 
+    /* Get questions to render based on the option if the users wants to 
+       see all answered or unanswered questions. The answered question can 
+       be found in the user-object */
     const constQuestionsKeyToRender = questionKeys.filter(questionKey => {
       const found = (
-        questions[questionKey].optionOne.votes.includes(auth.id) ||
-        questions[questionKey].optionTwo.votes.includes(auth.id)
+        Object.keys(users[auth.id].answers).includes(questionKey)
       )
-      return this.state.showAnswered ? found : !found
+      return showAnswered ? found : !found
     })
-    const { showAnswered } = this.state
 
     return (
       <div >
@@ -41,15 +42,15 @@ class QuestionList extends Component {
         </div>
         {
           constQuestionsKeyToRender.length > 0
-            ? (
+            ? ( /* Render questions if at least 1 has been found. */
               constQuestionsKeyToRender.map(questionKey => {
-                const currQuestion = this.props.questions[questionKey]
+                const currQuestion = questions[questionKey]
                 return (
                   <QuestionPreview id={questionKey} />
                 )
               })
             )
-            : (
+            : ( /*  Otherwise show a message */
               <div className='flex-vertical flex-center m-t-2'>
                 <h2>No questions found.</h2>
               </div>
@@ -58,17 +59,17 @@ class QuestionList extends Component {
       </div>
     )
   }
-
 }
 
-function mapStateToProps({ questions, auth }, props) {
+function mapStateToProps({ questions, auth, users }, props) {
   return {
     questionKeys: Object.keys(questions).sort(
       (a, b) =>
         questions[a].timestamp < questions[b].timestamp
     ),
     questions,
-    auth
+    auth,
+    users
   }
 }
 

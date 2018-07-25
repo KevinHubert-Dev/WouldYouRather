@@ -14,7 +14,6 @@ export function questionsLoaded(questions) {
 }
 
 export function questionAnswered(authedUser, questionid, answer) {
-  console.log("a")
   return {
     type: QUESTION_ANSWERED,
     questionid,

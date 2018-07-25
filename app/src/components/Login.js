@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 
 import Dropdown from 'react-dropdown'
-import Question from './Question'
 import 'react-dropdown/style.css'
 
-import ReactLogo from '../img/react.png'
-
 import * as AuthActions from '../redux/actions/authAction'
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+
+import ReactLogo from '../img/react.png'
 
 class Login extends Component {
 
@@ -31,17 +30,22 @@ class Login extends Component {
 
   render() {
 
-    if (this.state.redirectToDashboard) {
+    const { redirectToDashboard, loadingImg, selectedUser } = this.state
+    const { users } = this.props
+
+    /* Redirect when login done */
+    if (redirectToDashboard) {
       return <Redirect to='/' />
     }
 
-    if (this.props.users === null) {
+    /* Wait till data received from API */
+    if (users === null) {
       return <p>LOADING</p>
     }
 
     const availableUsername = []
-    Object.keys(this.props.users).map((key) => {
-      availableUsername.push({ value: this.props.users[key], label: this.props.users[key].name })
+    Object.keys(users).map((key) => {
+      availableUsername.push({ value: users[key], label: users[key].name })
     })
 
     return (
@@ -53,11 +57,11 @@ class Login extends Component {
         <hr />
         {/* Body */}
         <div className='flex-vertical flex-center user-selection '>
-          {this.state.selectedUser && !this.state.loadingImg
+          {selectedUser && !loadingImg
             ? /* Show image of selected user */
             <img
-              src={this.state.selectedUser.avatarURL}
-              alt={`Avatar of ${this.state.selectedUser.name}`}
+              src={selectedUser.avatarURL}
+              alt={`Avatar of ${selectedUser.name}`}
               className='logo round'
             />
             : /* Show react-logo because no user is selected yet */
@@ -71,17 +75,15 @@ class Login extends Component {
             options={availableUsername}
             placeholder='Select a user'
             onChange={this.handleDropdownChange}
-            value={this.state.selectedUser
-              ? this.state.selectedUser.name
+            value={selectedUser
+              ? selectedUser.name
               : "Select a user"
-
             }
           />
           <button
             className='m-t-2 m-b-2'
-            disabled={!this.state.selectedUser ? true : false}
-            onClick={(e) => this.handleClick(e)}
-          >
+            disabled={!selectedUser ? true : false}
+            onClick={(e) => this.handleClick(e)}>
             Select this User
         </button>
         </div>
