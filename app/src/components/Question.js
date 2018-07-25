@@ -13,12 +13,13 @@ import 'react-dropdown/style.css'
 class Question extends Component {
 
   state = {
-    selectedOption: undefined
+    /* selectedOption will be changed inside of the component. */
+    selectedOption: this.props.answered
   }
 
-  componentDidMount() {
-    this.setState({ selectedOption: this.props.answered })
-  }
+  // componentDidMount() {
+  //   this.setState({ selectedOption: this.props.answered })
+  // }
 
   onSubmit = (event) => {
     event.preventDefault()
@@ -36,6 +37,8 @@ class Question extends Component {
     const { selectedOption } = this.state;
 
     const votesCount = optionOne.votes.length + optionTwo.votes.length
+    const optionOneVotes = optionOne.votes.length
+    const optionTwoVotes = optionTwo.votes.length
     const optionOnePercent = this.calcPercent(optionOne.votes.length, votesCount)
     const optionTwoPercent = this.calcPercent(optionTwo.votes.length, votesCount)
 
@@ -55,9 +58,9 @@ class Question extends Component {
           </div>
           {/* Right-Side (Form) */}
           <div className='question-content-container'>
-            <h1 className="blue">Would you rather...</h1>
+            <h1 className="blue">Would you Rather</h1>
             {/* Options */}
-            <div className='question-option'>
+            <div className='question-option  max-width'>
               <label>
                 <input
                   type="radio"
@@ -71,13 +74,13 @@ class Question extends Component {
               </label>
               {
                 this.props.answered &&
-                <div className='flex-horizontal flex-center'>
+                <div className='flex-horizontal flex-center '>
                   <Line percent={optionOnePercent} strokeWidth="2" strokeColor="#4169ff" />
-                  <p className='m-l-1'>{optionOnePercent}%</p>
+                  <p className='m-l-1'>{optionOne.votes.length} {optionOneVotes !== 1 ? 'votes' : 'vote'} ({optionOnePercent}%)</p>
                 </div>
               }
             </div>
-            <div className='question-option'>
+            <div className='question-option max-width'>
               <label>
                 <input
                   type="radio"
@@ -93,7 +96,7 @@ class Question extends Component {
                 this.props.answered &&
                 <div className='flex-horizontal flex-center'>
                   <Line percent={optionTwoPercent} strokeWidth="2" strokeColor="#4169ff" />
-                  <p className='m-l-1'>{optionTwoPercent}%</p>
+                  <p className='m-l-1'>{optionTwoVotes} {optionTwoVotes !== 1 ? 'votes' : 'vote'} ({optionTwoPercent}%)</p>
                 </div>
               }
             </div>
@@ -110,10 +113,9 @@ class Question extends Component {
   }
 }
 
+
 function mapStateToProps({ questions, auth, users }, { match }) {
-
   const { id } = match.params
-
   return {
     question: questions[id],
     author: users[questions[id].author],
