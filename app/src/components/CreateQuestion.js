@@ -5,6 +5,10 @@ import 'react-dropdown/style.css'
 
 import PropTypes from 'prop-types'
 
+import * as QuestionActions from '../redux/actions/questionsAction'
+import { connect } from 'react-redux'
+
+import { Redirect } from 'react-router'
 
 class CreateQuestion extends Component {
 
@@ -12,11 +16,22 @@ class CreateQuestion extends Component {
 
   state = {
     optionOne: '',
-    optionTwo: ''
+    optionTwo: '',
+    redirectToDashboard: false
   }
 
   handleSubmit = (event) => {
     event.preventDefault()
+    this.props.dispatch(
+      QuestionActions.handleQuestionCreate(
+        this.state.optionOne,
+        this.state.optionTwo,
+        this.props.auth.id
+      )
+    )
+    this.setState({
+      redirectToDashboard: true
+    })
   }
 
   handleOptionInputChange(key, value) {
@@ -28,8 +43,12 @@ class CreateQuestion extends Component {
   }
 
   render() {
-    const { optionOne, optionTwo } = this.state;
+    const { optionOne, optionTwo, redirectToDashboard } = this.state;
     const { owner, avatarURL } = this.props
+
+    if (redirectToDashboard) {
+      return <Redirect to='/' />
+    }
 
     return (
       <div className='card'>
@@ -39,15 +58,15 @@ class CreateQuestion extends Component {
         {/* Body */}
         <div className='card-content'>
           {/* Left-Side (Avatar) */}
-          <div className='question-avatar-container'>
-            <img className='question-avatar'
-              src={avatarURL}
-              alt={`Avatar of ${owner}`}
+          <div className='question-avatar-container flex-center'>
+            <img className='avatar round'
+              src={this.props.auth.avatarURL}
+              alt={`Avatar of ${this.props.auth.name}`}
             />
           </div>
           {/* Right-Side (Form) */}
           <div className='question-content-container'>
-            <h1 className="colorful">Would you rather?</h1>
+            <h1 className="blue">Would you rather?</h1>
             {/* Options */}
             <input
               className='m-t-1'
@@ -85,9 +104,11 @@ class CreateQuestion extends Component {
   }
 }
 
-CreateQuestion.propTypes = {
-  owner: PropTypes.string.isRequired,
-  avatarURL: PropTypes.string.isRequired,
+
+function mapStateToProps({ auth }, props) {
+  return {
+    auth
+  }
 }
 
-export default CreateQuestion
+export default connect(mapStateToProps)(CreateQuestion)
