@@ -5,7 +5,6 @@ The application is part of the React-Nanodegree-Course by Udacity.
 
 For more informations visit [Udacity.com - React-Nanodegree](https://de.udacity.com/course/react-nanodegree--nd019)
 
-
 ## Installation
 
 ### Clone & Install
@@ -24,15 +23,17 @@ npm start
 
 ## Screenshots
 
-![Login](/screenshots/img1.jpg?raw=true)
+![Login](/screenshots/1.jpg?raw=true)
 
-![Overview](/screenshots/img2.jpg?raw=true)
+![Overview](/screenshots/2.jpg?raw=true)
 
-![CreateQuestion](/screenshots/img3.jpg?raw=true)
+![CreateQuestion](/screenshots/3.jpg?raw=true)
 
-![Question](/screenshots/img4.jpg?raw=true)
+![Question](/screenshots/4.jpg?raw=true)
 
-![Leaderboard](/screenshots/img5.jpg?raw=true)
+![QuestionStats](/screenshots/5.jpg?raw=true)
+
+![Leaderboard](/screenshots/6.jpg?raw=true)
 
 ## Features
 - Select a profile to play with (no password login)
@@ -41,7 +42,7 @@ npm start
 - Separated view for answered / unanswered questions
 - View question-statistics.
 - View leaderboard (points = asked questions + answered questions)
-- Switch the profile to play with (logoff)
+- Switch between profiles to play with (logoff)
 
 
 # About
