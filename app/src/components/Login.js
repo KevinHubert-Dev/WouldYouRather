@@ -1,29 +1,49 @@
 import React, { Component } from 'react'
 
 import Dropdown from 'react-dropdown'
+import Question from './Question'
 import 'react-dropdown/style.css'
 
 import ReactLogo from '../img/react.png'
 
-import Question from './Question'
+import * as AuthActions from '../redux/actions/authAction'
+import { Redirect } from 'react-router'
+import { connect } from 'react-redux'
 
 class Login extends Component {
 
   state = {
-    selectedUser: undefined
+    selectedUser: undefined,
+    redirectToDashboard: false
   }
 
   handleClick = (event) => {
     event.preventDefault()
+    this.props.dispatch(AuthActions.setAuthedUser(this.state.selectedUser))
+    this.setState({ redirectToDashboard: true })
   }
 
   handleDropdownChange = (item) => {
     this.setState({
-      selectedUser: item
+      selectedUser: item.value
     })
   }
 
   render() {
+
+    if (this.state.redirectToDashboard) {
+      return <Redirect to='/' />
+    }
+
+    if (this.props.users === null) {
+      return <p>LOADING</p>
+    }
+
+    const availableUsername = []
+    Object.keys(this.props.users).map((key) => {
+      availableUsername.push({ value: this.props.users[key], label: this.props.users[key].name })
+    })
+
     return (
 
       <div className='card small'>
@@ -33,14 +53,29 @@ class Login extends Component {
         <hr />
         {/* Body */}
         <div className='flex-vertical flex-center user-selection '>
-          {this.state.selectedUser
-            ? <img src={'TODO:'} alt={`Avatar of ${this.state.selectedUser}`} className='avatar' />
-            : <img src={ReactLogo} alt='React Logo' className='logo' />
+          {this.state.selectedUser && !this.state.loadingImg
+            ? /* Show image of selected user */
+            <img
+              src={this.state.selectedUser.avatarURL}
+              alt={`Avatar of ${this.state.selectedUser.name}`}
+              className='logo round'
+            />
+            : /* Show react-logo because no user is selected yet */
+            <img
+              src={ReactLogo}
+              alt='React Logo'
+              className='logo rotating'
+            />
           }
-          <Dropdown options={['val1', 'val2', 'val3']}
+          <Dropdown
+            options={availableUsername}
             placeholder='Select a user'
             onChange={this.handleDropdownChange}
-            value={this.state.selectedUser}
+            value={this.state.selectedUser
+              ? this.state.selectedUser.name
+              : "Select a user"
+
+            }
           />
           <button
             className='m-t-2 m-b-2'
@@ -57,4 +92,10 @@ class Login extends Component {
 
 }
 
-export default Login
+function mapStateToProps({ users }) {
+  return {
+    users
+  }
+}
+
+export default connect(mapStateToProps)(Login)
