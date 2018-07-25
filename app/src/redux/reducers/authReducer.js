@@ -6,7 +6,8 @@ const authReducer = (state = null, action) => {
       return action.user
     case AuthActions.UNSET_AUTHED_USER:
       return null
-    default: return state;
+    default:
+      return state;
   }
 }
 

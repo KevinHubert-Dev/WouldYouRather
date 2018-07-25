@@ -16,7 +16,6 @@ const userReducer = (state = null, action) => {
           }
         }
       }
-
     case QuestionActions.QUESTION_CREATE:
       const updatedUser = {
         [action.question.author]: {
@@ -28,7 +27,8 @@ const userReducer = (state = null, action) => {
         ...state,
         ...updatedUser
       }
-    default: return state;
+    default:
+      return state;
   }
 }
 

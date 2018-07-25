@@ -14,12 +14,12 @@ const questionReducer = (state = {}, action) => {
           votes: [...state[action.questionid][action.answer].votes, action.authedUser]
         }
       }
-      
       return {
         ...state,
         [action.questionid]: questionWithNewVote
       }
-    default: return state
+    default:
+      return state
   }
 }
 

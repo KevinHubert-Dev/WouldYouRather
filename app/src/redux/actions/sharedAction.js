@@ -9,7 +9,7 @@ export function handleLoadInitialData() {
   return dispatch => {
     dispatch(showLoading())
     API.getInitialData()
-      .then(({users, questions}) => {
+      .then(({ users, questions }) => {
         dispatch(QuestionActions.questionsLoaded(questions))
         dispatch(UserActions.usersLoaded(users))
         dispatch(hideLoading())
