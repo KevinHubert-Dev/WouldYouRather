@@ -66,37 +66,40 @@ class CreateQuestion extends Component {
           </div>
           {/* Right-Side (Form) */}
           <div className='question-content-container'>
-            <h1 className="blue">Would you rather?</h1>
+            <h1 className="blue">Would you Rather</h1>
             {/* Options */}
-            <input
-              className='m-t-1'
-              type="text"
-              value={optionOne}
-              placeholder='Option A...'
-              onChange={(event) => { this.handleOptionInputChange('optionOne', event.target.value) }}
-            />
-            {optionOne.length > (this.maxLengthForOption / 2)
-              ? <p className='inputfield-hint'>{this.maxLengthForOption - optionOne.length} chars left</p>
-              : <p className='inputfield-hint' />} {/* Avoids UI-resizing when a error gets shown */}
-            <input
-              className='m-t-2'
-              type="text"
-              placeholder='Option B...'
-              value={optionTwo}
-              onChange={(event) => { this.handleOptionInputChange('optionTwo', event.target.value) }}
-            />
-            {console.log(optionTwo)}
-            {optionTwo.length > (this.maxLengthForOption / 2)
-              ? <p className='inputfield-hint'>{this.maxLengthForOption - optionTwo.length} chars left</p>
-              : <p className='inputfield-hint' />} {/* Avoids UI-resizing when a error gets shown */}
-            {/* Submit-Button */}
-            <button
-              disabled={!optionOne || !optionTwo}
-              className='submit-btn m-t-2 m-b-1'
-              onClick={this.handleSubmit}
-            >
-              Submit
-            </button>
+            <form className='max-width' onSubmit={this.handleSubmit}>
+              <input
+                required
+                className='m-t-1'
+                type="text"
+                value={optionOne}
+                placeholder='Option A...'
+                onChange={(event) => { this.handleOptionInputChange('optionOne', event.target.value) }}
+              />
+              {optionOne.length > (this.maxLengthForOption / 2)
+                ? <p className='inputfield-hint'>{this.maxLengthForOption - optionOne.length} chars left</p>
+                : <p className='inputfield-hint' />} {/* Avoids UI-resizing when a error gets shown */}
+              <input
+                required
+                className='m-t-2'
+                type="text"
+                placeholder='Option B...'
+                value={optionTwo}
+                onChange={(event) => { this.handleOptionInputChange('optionTwo', event.target.value) }}
+              />
+              {optionTwo.length > (this.maxLengthForOption / 2)
+                ? <p className='inputfield-hint'>{this.maxLengthForOption - optionTwo.length} chars left</p>
+                : <p className='inputfield-hint' />} {/* Avoids UI-resizing when a error gets shown */}
+              {/* Submit-Button */}
+              <button
+                disabled={!optionOne || !optionTwo}
+                className='submit-btn m-t-2 m-b-1'
+                onClick={this.handleSubmit}
+              >
+                Submit
+              </button>
+            </form>
           </div>
         </div>
       </div>
@@ -105,7 +108,7 @@ class CreateQuestion extends Component {
 }
 
 
-function mapStateToProps({ auth }, props) {
+function mapStateToProps({ auth }) {
   return {
     auth
   }
